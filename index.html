@@ -1,11 +1,4 @@
 <!DOCTYPE html>
-      .card p, .card a.button-link {
-        font-size: 0.95rem;
-      }
-    }
-  </style>
-</head>
-<body>
   <div class="wrapper">
     <h1>施術者マッチング診断</h1>
     <div class="form-group">
@@ -71,60 +64,19 @@
     <button onclick="matchStaff()">診断する</button>
     <div class="results" id="results"></div>
   </div>
-  <script id="staff-json" type="application/json">
-    [
-      {
-  "name": "Miki",
-  "gender": "女性",
-  "image": "Miki.png",
-  "areas": ["もみ徳 青波店", "もみ徳 瑞月店"],
-  "skills": ["ワザがすごい"],
-  "link": "miki.html"
-},
-{
-  "name": "たろう",
-  "gender": "男性",
-  "image": "taro.png",
-  "areas": ["もみ徳 空町店", "もみ徳 鷹沢店"],
-  "skills": ["コリに的確"],
-  "link": "taro.html"
-},
-{
-  "name": "Kenta",
-  "gender": "男性",
-  "image": "Kenta.png",
-  "areas": ["もみ徳 響森店", "もみ徳 雲野店", "もみ徳 朝凪店"],
-  "skills": ["力強い"],
-  "link": "kenta.html"
-},
-{
-  "name": "Haruka",
-  "gender": "女性",
-  "image": "Haruka.png",
-  "areas": ["もみ徳 花渓店", "もみ徳 柚里店"],
-  "skills": ["スッキリ"],
-  "link": "haruka.html"
-},
-{
-  "name": "Yui",
-  "gender": "女性",
-  "image": "Yui.png",
-  "areas": ["もみ徳 真名店", "もみ徳 雲野店"],
-  "skills": ["丁寧な接客"],
-  "link": "yui.html"
-},
-{
-  "name": "Souta",
-  "gender": "男性",
-  "image": "Souta.png",
-  "areas": ["もみ徳 空町店", "もみ徳 朝凪店", "もみ徳 青波店"],
-  "skills": ["動作が楽に"],
-  "link": "souta.html"
-}
-    ]
-  </script>
   <script>
-    const staffList = JSON.parse(document.getElementById('staff-json').textContent);
+    const staffList = JSON.parse(document.getElementById('staff-json').textContent).map(s => {
+      s.schedule = {
+        "月": s.name === 'Kenta' || s.name === 'Miki' ? "休み" : "10:00〜19:00",
+        "火": "10:00〜19:00",
+        "水": s.name === 'Souta' ? "休み" : "10:00〜19:00",
+        "木": s.name === 'Yui' ? "休み" : "10:00〜19:00",
+        "金": "10:00〜19:00",
+        "土": s.name === 'Haruka' ? "休み" : "10:00〜19:00",
+        "日": "休み"
+      };
+      return s;
+    });
 
     function matchStaff() {
       const area = document.getElementById('area').value;
@@ -155,6 +107,10 @@
             <p>性別: ${s.gender}</p>
             <p>出勤店舗: ${s.areas.join(', ')}</p>
             <p>得意項目: ${s.skills.join(', ')}</p>
+            <p>出勤スケジュール:</p>
+            <ul>
+              ${Object.entries(s.schedule).map(([day, time]) => `<li>${day}: ${time}</li>`).join('')}
+            </ul>
             <a class="button-link" href="${s.link}" target="_blank">▶ 詳細を見る</a>
           </div>
         </div>
