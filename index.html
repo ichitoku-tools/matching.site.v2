@@ -1,50 +1,4 @@
 <!DOCTYPE html>
-    const p2 = document.getElementById("priority2").value;
-    const p3 = document.getElementById("priority3").value;
-
-    // 仮データ（本来は外部JSONから取得）
-    const staff = [
-      {
-        name: "たろう",
-        gender: "男性",
-        area: ["もみ徳 空町店", "もみ徳 鷹沢店"],
-        topSkill: "コリに的確",
-        image: "taro.png",
-        page: "taro.html"
-      },
-      {
-        name: "Miki",
-        gender: "女性",
-        area: ["もみ徳 青波店", "もみ徳 瑞月店"],
-        topSkill: "ワザがすごい",
-        image: "Miki.png",
-        page: "miki.html"
-      },
-      {
-        name: "Yui",
-        gender: "女性",
-        area: ["もみ徳 真名店", "もみ徳 雲野店"],
-        topSkill: "丁寧な接客",
-        image: "Yui.png",
-        page: "yui.html"
-      },
-      {
-        name: "Haruka",
-        gender: "女性",
-        area: ["もみ徳 花渓店", "もみ徳 柚里店"],
-        topSkill: "スッキリ",
-        image: "Haruka.png",
-        page: "haruka.html"
-      },
-      {
-        name: "Kenta",
-        gender: "男性",
-        area: ["もみ徳 響森店", "もみ徳 雲野店", "もみ徳 朝凪店"],
-        topSkill: "力強い",
-        image: "Kenta.png",
-        page: "kenta.html"
-      },
-      {
         name: "Souta",
         gender: "男性",
         area: ["もみ徳 空町店", "もみ徳 朝凪店", "もみ徳 青波店"],
@@ -88,6 +42,8 @@ const matched = scored.filter(s => s.score > 0);
           <p>性別: ${staff.gender}</p>
           <p>出勤店舗: ${staff.area.join("、 ")}</p>
           <p>得意: ${staff.topSkill}</p>
+          <p><strong>スコア: ${staff.score}点</strong></p>
+          <p>一致条件: ${[p1, p2, p3].filter(p => staff.topSkill === p).join("・") || "その他"}</p>
           <a class="button-link" href="${staff.page}" target="_blank">詳しく見る</a>
         </div>
       `;
