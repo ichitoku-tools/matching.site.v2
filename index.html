@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>施術者マッチング診断</title>
+  <style>
+    body {
+      font-family: 'Hiragino Kaku Gothic ProN', sans-serif;
+      background-color: #fcf9f3;
+      padding: 1rem;
+      color: #333;
+      font-size: 16px;
+    }
+    .wrapper {
+      max-width: 100%;
+      width: 100%;
+      box-sizing: border-box;
+      margin: auto;
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 12px;
+      border: 1px solid #f4a261;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.8rem;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 0.3rem;
+      font-size: 1.1rem;
+    }
+    select, button {
+      width: 100%;
+      padding: 0.6rem;
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    .results {
+      margin-top: 2rem;
+    }
+    .card {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      display: flex;
+      flex-direction: row;
+      gap: 1rem;
+    }
+    .card a img {
+      width: 80px;
+      height: 80px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+    .card h3 {
+      margin: 0.5rem 0 0 0;
+      font-size: 1.2rem;
+    }
+    .card p {
+      margin: 0.3rem 0;
+      font-size: 1rem;
+    }
+    .card a.button-link {
+      display: inline-block;
+      margin-top: 0.5rem;
+      padding: 0.4rem 1.2rem;
+      background-color: #f4a261;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+    @media screen and (max-width: 600px) {
+      body {
+        font-size: 15px;
+      }
+      h1 {
+        font-size: 1.5rem;
+      }
+      .card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .card h3 {
+        font-size: 1.1rem;
+      }
+      .card p, .card a.button-link {
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<!-- スクリプトは後から読み込み -->
+<script src="main.js"></script>
+</body>
+</html>
