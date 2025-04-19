@@ -1,74 +1,99 @@
 <!DOCTYPE html>
-  
-</head>
-<body>
-  <div class="wrapper">
-    <h1>施術者マッチング診断</h1>
-    <p class="description">「次はこの人にお願いしてみようかな？」という指名・ご予約の参考にご活用ください💡</p>
-    <div class="form-group">
-      <label for="area">希望エリア:</label>
-      <select id="area">
-        <option value="">どこでも</option>
-        <option value="もみ徳 青波店">もみ徳 青波店</option>
-        <option value="もみ徳 花渓店">もみ徳 花渓店</option>
-        <option value="もみ徳 雲野店">もみ徳 雲野店</option>
-        <option value="もみ徳 響森店">もみ徳 響森店</option>
-        <option value="もみ徳 空町店">もみ徳 空町店</option>
-        <option value="もみ徳 瑞月店">もみ徳 瑞月店</option>
-        <option value="もみ徳 真名店">もみ徳 真名店</option>
-        <option value="もみ徳 柚里店">もみ徳 柚里店</option>
-        <option value="もみ徳 鷹沢店">もみ徳 鷹沢店</option>
-        <option value="もみ徳 朝凪店">もみ徳 朝凪店</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="gender">希望する施術者の性別:</label>
-      <select id="gender">
-        <option value="">気にしない</option>
-        <option value="男性">男性</option>
-        <option value="女性">女性</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="priority1">第一条件（最優先）:</label>
-      <select id="priority1">
-        <option value="">選択してください</option>
-        <option value="コリに的確">コリに的確</option>
-        <option value="力強い">力強い</option>
-        <option value="動作が楽に">動作が楽に</option>
-        <option value="スッキリ">スッキリ</option>
-        <option value="丁寧な接客">丁寧な接客</option>
-        <option value="ワザがすごい">ワザがすごい</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="priority2">第二条件:</label>
-      <select id="priority2">
-        <option value="">選択してください</option>
-        <option value="コリに的確">コリに的確</option>
-        <option value="力強い">力強い</option>
-        <option value="動作が楽に">動作が楽に</option>
-        <option value="スッキリ">スッキリ</option>
-        <option value="丁寧な接客">丁寧な接客</option>
-        <option value="ワザがすごい">ワザがすごい</option>
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="priority3">第三条件:</label>
-      <select id="priority3">
-        <option value="">選択してください</option>
-        <option value="コリに的確">コリに的確</option>
-        <option value="力強い">力強い</option>
-        <option value="動作が楽に">動作が楽に</option>
-        <option value="スッキリ">スッキリ</option>
-        <option value="丁寧な接客">丁寧な接客</option>
-        <option value="ワザがすごい">ワザがすごい</option>
-      </select>
-    </div>
-    <button onclick="matchStaff()">診断する</button>
-    <div class="results" id="results">
-      <!-- ここにマッチング結果が表示されます（勤務日数5日以内に制限） -->
-    </div>
-  </div>
+    const p2 = document.getElementById("priority2").value;
+    const p3 = document.getElementById("priority3").value;
+
+    // 仮データ（本来は外部JSONから取得）
+    const staff = [
+      {
+        name: "たろう",
+        gender: "男性",
+        area: ["もみ徳 空町店", "もみ徳 鷹沢店"],
+        topSkill: "コリに的確",
+        image: "taro.png",
+        page: "taro.html"
+      },
+      {
+        name: "Miki",
+        gender: "女性",
+        area: ["もみ徳 青波店", "もみ徳 瑞月店"],
+        topSkill: "ワザがすごい",
+        image: "Miki.png",
+        page: "miki.html"
+      },
+      {
+        name: "Yui",
+        gender: "女性",
+        area: ["もみ徳 真名店", "もみ徳 雲野店"],
+        topSkill: "丁寧な接客",
+        image: "Yui.png",
+        page: "yui.html"
+      },
+      {
+        name: "Haruka",
+        gender: "女性",
+        area: ["もみ徳 花渓店", "もみ徳 柚里店"],
+        topSkill: "スッキリ",
+        image: "Haruka.png",
+        page: "haruka.html"
+      },
+      {
+        name: "Kenta",
+        gender: "男性",
+        area: ["もみ徳 響森店", "もみ徳 雲野店", "もみ徳 朝凪店"],
+        topSkill: "力強い",
+        image: "Kenta.png",
+        page: "kenta.html"
+      },
+      {
+        name: "Souta",
+        gender: "男性",
+        area: ["もみ徳 空町店", "もみ徳 朝凪店", "もみ徳 青波店"],
+        topSkill: "動作が楽に",
+        image: "Souta.png",
+        page: "souta.html"
+      }
+    ];
+
+    const scored = staff.map(s => {
+  let score = 0;
+  if (s.topSkill === p1) score += 3;
+  if (s.topSkill === p2) score += 2;
+  if (s.topSkill === p3) score += 1;
+
+  const areaMatch = (area === "" || s.area.includes(area));
+  const genderMatch = (gender === "" || s.gender === gender);
+
+  return areaMatch && genderMatch ? { ...s, score } : null;
+}).filter(Boolean);
+
+scored.sort((a, b) => b.score - a.score);
+
+const matched = scored.filter(s => s.score > 0);
+
+    const resultDiv = document.getElementById("results");
+    resultDiv.innerHTML = "";
+
+    if (matched.length === 0) {
+      resultDiv.innerHTML = "<p>該当するスタッフが見つかりませんでした。</p>";
+      return;
+    }
+
+    matched.forEach(staff => {
+      const card = document.createElement("div");
+      card.className = "card";
+      card.innerHTML = `
+        <img src="${staff.image}" alt="${staff.name}">
+        <div>
+          <h3>${staff.name}</h3>
+          <p>性別: ${staff.gender}</p>
+          <p>出勤店舗: ${staff.area.join("、 ")}</p>
+          <p>得意: ${staff.topSkill}</p>
+          <a class="button-link" href="${staff.page}" target="_blank">詳しく見る</a>
+        </div>
+      `;
+      resultDiv.appendChild(card);
+    });
+  }
+</script>
 </body>
 </html>
