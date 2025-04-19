@@ -1,8 +1,12 @@
 <!DOCTYPE html>
+  
+</head>
+<body>
   <div class="wrapper">
     <h1>施術者マッチング診断</h1>
+    <p class="description">「次はこの人にお願いしてみようかな？」という指名・ご予約の参考にご活用ください💡</p>
     <div class="form-group">
-      <label>希望エリア:</label>
+      <label for="area">希望エリア:</label>
       <select id="area">
         <option value="">どこでも</option>
         <option value="もみ徳 青波店">もみ徳 青波店</option>
@@ -18,7 +22,7 @@
       </select>
     </div>
     <div class="form-group">
-      <label>希望する施術者の性別:</label>
+      <label for="gender">希望する施術者の性別:</label>
       <select id="gender">
         <option value="">気にしない</option>
         <option value="男性">男性</option>
@@ -26,7 +30,7 @@
       </select>
     </div>
     <div class="form-group">
-      <label>第一条件（最優先）:</label>
+      <label for="priority1">第一条件（最優先）:</label>
       <select id="priority1">
         <option value="">選択してください</option>
         <option value="コリに的確">コリに的確</option>
@@ -38,7 +42,7 @@
       </select>
     </div>
     <div class="form-group">
-      <label>第二条件:</label>
+      <label for="priority2">第二条件:</label>
       <select id="priority2">
         <option value="">選択してください</option>
         <option value="コリに的確">コリに的確</option>
@@ -50,7 +54,7 @@
       </select>
     </div>
     <div class="form-group">
-      <label>第三条件:</label>
+      <label for="priority3">第三条件:</label>
       <select id="priority3">
         <option value="">選択してください</option>
         <option value="コリに的確">コリに的確</option>
@@ -62,60 +66,9 @@
       </select>
     </div>
     <button onclick="matchStaff()">診断する</button>
-    <div class="results" id="results"></div>
+    <div class="results" id="results">
+      <!-- ここにマッチング結果が表示されます（勤務日数5日以内に制限） -->
+    </div>
   </div>
-  <script>
-    const staffList = JSON.parse(document.getElementById('staff-json').textContent).map(s => {
-      s.schedule = {
-        "月": s.name === 'Kenta' || s.name === 'Miki' ? "休み" : "10:00〜19:00",
-        "火": "10:00〜19:00",
-        "水": s.name === 'Souta' ? "休み" : "10:00〜19:00",
-        "木": s.name === 'Yui' ? "休み" : "10:00〜19:00",
-        "金": "10:00〜19:00",
-        "土": s.name === 'Haruka' ? "休み" : "10:00〜19:00",
-        "日": "休み"
-      };
-      return s;
-    });
-
-    function matchStaff() {
-      const area = document.getElementById('area').value;
-      const gender = document.getElementById('gender').value;
-      const priority1 = document.getElementById('priority1').value;
-      const priority2 = document.getElementById('priority2').value;
-      const priority3 = document.getElementById('priority3').value;
-
-      const results = staffList.map(staff => {
-        let score = 0;
-        if (!area || staff.areas.includes(area)) score += 1;
-        if (!gender || staff.gender === gender) score += 1;
-        if (priority1 && staff.skills.includes(priority1)) score += 3;
-        if (priority2 && staff.skills.includes(priority2)) score += 2;
-        if (priority3 && staff.skills.includes(priority3)) score += 1;
-        return { ...staff, score };
-      }).filter(s => s.score > 0)
-        .sort((a, b) => b.score - a.score);
-
-      const resultBox = document.getElementById('results');
-      resultBox.innerHTML = results.length ? results.map(s => `
-        <div class="card">
-          <a href="${s.link}" target="_blank">
-            <img src="${s.image}" alt="${s.name}" />
-          </a>
-          <div>
-            <h3>${s.name}</h3>
-            <p>性別: ${s.gender}</p>
-            <p>出勤店舗: ${s.areas.join(', ')}</p>
-            <p>得意項目: ${s.skills.join(', ')}</p>
-            <p>出勤スケジュール:</p>
-            <ul>
-              ${Object.entries(s.schedule).map(([day, time]) => `<li>${day}: ${time}</li>`).join('')}
-            </ul>
-            <a class="button-link" href="${s.link}" target="_blank">▶ 詳細を見る</a>
-          </div>
-        </div>
-      `).join('') : '<p>一致するスタッフが見つかりませんでした。</p>';
-    }
-  </script>
 </body>
 </html>
